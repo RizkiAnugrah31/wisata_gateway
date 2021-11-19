@@ -20,3 +20,5 @@ $router->get('/Employee/detail/{id}','Cms\EmployeeController@detail');
 $router->post('/Employee/store','Cms\EmployeeController@store');
 $router->put('/Employee/update/{id}','Cms\EmployeeController@update');
 $router->delete('/Employee/delete/{id}','Cms\EmployeeController@delete');
+
+$router->post('/Employee/login','Cms\AuthEmployeeController@login');

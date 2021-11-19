@@ -12,7 +12,7 @@ class GateawayController extends Controller
 {
     public function index(Request $request)
     {
-        dd("test");
+        // dd("test");
         $client = new Client();
         // $client = new \GuzzleHttp\Client('GET', 'http://localhost:8002/Employee');
         $request = $client->get('http://localhost:8002/Employee/fetch');
