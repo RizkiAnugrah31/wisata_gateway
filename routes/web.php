@@ -22,3 +22,9 @@ $router->put('/Employee/update/{id}','Cms\EmployeeController@update');
 $router->delete('/Employee/delete/{id}','Cms\EmployeeController@delete');
 
 $router->post('/Employee/login','Cms\AuthEmployeeController@login');
+
+$router->get('/Banner/fetch','Cms\BannerController@index');
+$router->get('/Banner/detail/{id}','Cms\BannerContoller@detail');
+$router->post('/Banner/store','Cms\BannerController@store');
+$router->put('/Banner/update/{id}','Cms\BannerController@update');
+$router->delete('/Banner/delete/{id}','Cms\BannerController@delete');
