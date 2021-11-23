@@ -3,41 +3,51 @@ namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\EmployeeModel;
+use App\EmployeeModel;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Str;
+use App\Http\Controllers\Cms\Authcontroller;
+
 
 class AuthEmployeeController extends Controller
 {
     public function login(Request $request)
     {     
-        $client = new \GuzzleHttp\Client();;
-        $clientRequest = $client->post(env('SERVICE_MEMBER').'/Employee/login');
-        $request->only(
-                'user_roles_id',
-                'employee_firstname' ,
-                'employee_middlename' ,
-                'employee_lastname' ,
-                'employee_username' ,
-                'employee_email' ,
-                'employee_image' 
-        );
-        
-        $response = $clientRequest->getBody()->getContents();
+        $client = new Client();
+        $serviceResponse = $client->request('POST', env('SERVICE_MEMBER').'/Employee/login', [
+            'headers' => [
+                'accept' => 'application/json',
+                'Content-Type' => 'application/json'
+            ],
+            'json' => $request->only(
+                        'employee_email' ,
+                        'employee_password'
+                    )
+            ]);
+        return $serviceResponse->getData()->data->employee_firstname;
+        $request = $client->post(env('SERVICE_MEMBER').'/Employee/login',[
+            'json' => $request->only(
+                        'employee_email' ,
+                        'employee_password'
+                    )
+        ]);
+        dd($request->getData());
+        return $request;
+        $body = $request->getBody();
 
-        dd($response);
+        
         $random = Str::random(32);
         $secret_key = JWT::encode([
              'iss' => url('localhost:8002'),
              'iat' => time(),
-            //  'sub' => $AuthController->employee_id,
+            //  'sub' => $employee_id,
              'exp' => time() + 60 * 60 * 24 * 1
         ], env('JWT_SECRET'));
         
-        // dd($responseService->data());
-         return $body_array = json($response, true);
-         print("<pre>".print_r($encode, true). "</pre>");
+        // dd($request->getBody());
+         return $body_array = json_encode($body, true);
+         print("<pre>".print_r($body, true). "</pre>");
     }
 }
