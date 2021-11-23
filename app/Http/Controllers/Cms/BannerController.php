@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 
 class BannerController extends Controller
 {
+    
     public function index(Request $request)
     {
         $client = new \GuzzleHttp\Client();;
