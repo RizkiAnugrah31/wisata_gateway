@@ -26,7 +26,7 @@ class AuthEmployeeController extends Controller
                         'employee_password'
                     )
             ]);
-        return $serviceResponse->getData()->data->employee_firstname;
+        return $serviceResponse->getBody()->body->employee_email;
         $request = $client->post(env('SERVICE_MEMBER').'/Employee/login',[
             'json' => $request->only(
                         'employee_email' ,
