@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\EmployeeModel;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Cms\Authcontroller;
 
@@ -26,16 +25,16 @@ class AuthEmployeeController extends Controller
                         'employee_password'
                     )
             ]);
-        return $serviceResponse->getBody()->body->employee_email;
+        return $serviceResponse->getData()->data->employee_email;
         $request = $client->post(env('SERVICE_MEMBER').'/Employee/login',[
             'json' => $request->only(
                         'employee_email' ,
                         'employee_password'
                     )
         ]);
-        dd($request->getData());
-        return $request;
-        $body = $request->getBody();
+        // dd($request->getData());
+        // return $request;
+        $data = $request->getData();
 
         
         $random = Str::random(32);
@@ -47,7 +46,7 @@ class AuthEmployeeController extends Controller
         ], env('JWT_SECRET'));
         
         // dd($request->getBody());
-         return $body_array = json_encode($body, true);
+        //  return $body_array = json_encode($body, true);
          print("<pre>".print_r($body, true). "</pre>");
     }
 }

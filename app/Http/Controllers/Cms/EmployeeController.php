@@ -12,7 +12,7 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $client = new \GuzzleHttp\Client();;
-        $request = $client->get('http://localhost:8002/Employee/fetch');
+        $request = $client->get(env('SERVICE_MEMBER').'/Employee/fetch');
         $response = $request->getBody()->getContents();
         
         return $data = json_decode($response, true);
