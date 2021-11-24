@@ -11,11 +11,20 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        $client = new \GuzzleHttp\Client();;
-        $request = $client->get(env('SERVICE_MEMBER').'/Employee/fetch');
-        $response = $request->getBody()->getContents();
+        $client = new Client();
+        $options = [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => ' application/json',
+            ],
+        ];
+        $responseService = $client->request('GET', env('SEFVICE_MEMBER') . '/Employee/login', $options);
+        $reponse = json_decode($responseService->getBody()->getContents(), false);
+
+        dd($response->data);
+
+        return response()->json($response,$responseService->getStatusCode());
         
-        return $data = json_decode($response, true);
 
         print("<pre>".print_r($data, true). "</pre>");
         
@@ -23,7 +32,7 @@ class EmployeeController extends Controller
     }
 
     public function detail($id){
-        // dd("test");
+        dd("test");
         $client = new \GuzzleHttp\Client();;
         $request = $client->get('http://localhost:8002/Employee/detail/'.$id);
         $response = $request->getBody()->getContents();
@@ -36,15 +45,6 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         // dd('test');
-        
-        // $request = $client->post('http://localhost:8002/Employee/store');
-       
-        // $response = $request->getBody()->getContents();
-        
-        // return $data= json_decode($response, true);
-
-        // print("<pre>".print_r($data, true). "</pre>");
-
         $client = new \GuzzleHttp\Client();
         $response = $client->request('POST', 'http://localhost:8002/Employee/store', [
             'json' => [
@@ -97,12 +97,6 @@ class EmployeeController extends Controller
         $body = $response->getBody();
         return $body_array = json_decode($body, true);
         print("<pre>".print_r($body, true). "</pre>");
-
-        // $endpoint = url('PUT') . 'http://localhost:8002/Employee/store' . $request->id;
-        // $body = json_encode($request->all());
-        // $client = new Client();
-        // $response = $client->put($endpoint, ['body' => json_encode($request->all())]);    
-        // return redirect()->action('EmployeeController@update');
     
     }
 

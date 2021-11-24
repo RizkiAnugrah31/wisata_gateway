@@ -15,27 +15,19 @@ class AuthEmployeeController extends Controller
     public function login(Request $request)
     {     
         $client = new Client();
-        $serviceResponse = $client->request('POST', env('SERVICE_MEMBER').'/Employee/login', [
+        $options = [
             'headers' => [
-                'accept' => 'application/json',
-                'Content-Type' => 'application/json'
+                'Accept' => 'application/json',
+                'Content-Type' => ' application/json',
             ],
-            'json' => $request->only(
-                        'employee_email' ,
-                        'employee_password'
-                    )
-            ]);
-        return $serviceResponse->getData()->data->employee_email;
-        $request = $client->post(env('SERVICE_MEMBER').'/Employee/login',[
-            'json' => $request->only(
-                        'employee_email' ,
-                        'employee_password'
-                    )
-        ]);
-        // dd($request->getData());
-        // return $request;
-        $data = $request->getData();
+            'json' => $request->all()
+        ];
+        $responseService = $client->request('POST', env('SEFVICE_MEMBER') . '/AuthEmployee', $options);
+        $reponse = json_decode($responseService->getBody()->getContents(), false);
 
+        dd($response->data);
+
+        return response()->json($response,$responseService->getStatusCode());
         
         $random = Str::random(32);
         $secret_key = JWT::encode([
