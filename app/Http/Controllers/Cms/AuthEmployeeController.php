@@ -32,15 +32,17 @@ class AuthEmployeeController extends Controller
 
         // return response()->json($response , $responseService->getStatusCode());
         
-        $random = Str::random(32);
-        $secret_key = JWT::encode([
-             'iss' => 'http://localhost:8001/localhost:8002',
-             'iat' => time(),
-             'sub' => $response->data->employee_id,
-             'exp' => time() + 60 * 60 * 24 * 1
-        ], env('JWT_SECRET'));
+        
+       
+        // dd($response->success);
+        if($response->success) {
+            $secret_key = JWT::encode([
+                'iss' => url('http://localhost:8001/localhost:8002'),
+                'iat' => time(),
+                'sub' => $response->data->employee_id,
+                'exp' => time() + 60 * 60 * 24 * 1
+           ], env('JWT_SECRET'));
 
-        if($response) {
             return response()->json([
                 'data' => [
                     'employee_id' => $response->data->employee_id,
@@ -57,8 +59,8 @@ class AuthEmployeeController extends Controller
             ]);
         } else {
             return response()->json([
-                'data' => '',
-                'message' => "Invalid",
+                'data' => new\stdClass(),
+                'message' => "Invalid1",
                 'success' => false
             ]);
         }
