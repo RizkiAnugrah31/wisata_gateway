@@ -17,7 +17,7 @@ class ContohController extends Controller
                 'Content-Type' => 'application/json',
             ],
         ];
-        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/contoh', $options);
+        $responseService = $client->request('GET', env('SERVICE_MASTER') . '/contoh', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
         // uncomment di bawah bwt cek ambil data
         // dd($response->data);

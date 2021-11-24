@@ -29,7 +29,7 @@ $router->post('/Employee/store','Cms\EmployeeController@store');
 $router->put('/Employee/update/{id}','Cms\EmployeeController@update');
 $router->delete('/Employee/delete/{id}','Cms\EmployeeController@delete');
 
-$router->post('/Employee/login','Cms\AuthEmployeeController@login');
+// $router->post('/Employee/login','Cms\AuthEmployeeController@login');
 
 $router->get('/Banner/fetch','Cms\BannerController@index');
 $router->get('/Banner/detail/{id}','Cms\BannerContoller@detail');
