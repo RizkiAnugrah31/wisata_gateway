@@ -1,5 +1,7 @@
 <?php
 
+/** @var \Laravel\Lumen\Routing\Router $router */
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -14,6 +16,12 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+// example
+$router->get('/contoh', 'ContohController@exampleGet');
+$router->post('/contoh', 'ContohController@examplePost');
+$router->get('/contohGetParam', 'ContohController@exampleGetParam');
+// end example
 
 $router->get('/Employee/fetch','Cms\EmployeeController@index');
 $router->get('/Employee/detail/{id}','Cms\EmployeeController@detail');
