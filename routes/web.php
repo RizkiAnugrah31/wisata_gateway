@@ -36,3 +36,6 @@ $router->get('/Banner/detail/{id}','Cms\BannerContoller@detail');
 $router->post('/Banner/store','Cms\BannerController@store');
 $router->put('/Banner/update/{id}','Cms\BannerController@update');
 $router->delete('/Banner/delete/{id}','Cms\BannerController@delete');
+
+
+// $router->post('/login','Cms\AuthEmployeeController@login');
