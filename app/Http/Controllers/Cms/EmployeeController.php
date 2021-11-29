@@ -42,30 +42,6 @@ class EmployeeController extends Controller
         print("<pre>".print_r($data, true). "</pre>");
     }
 
-    public function store(Request $request)
-    {
-        // dd('test');
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', 'http://localhost:8002/Employee/store', [
-            'json' => [
-                'user_roles_id' => '3',
-                'employee_firstname' => 'Putri',
-                'employee_middlename' => 'Nadya',
-                'employee_lastname' => 'En',
-                'employee_username' => 'Putrinadyaen',
-                'employee_password' => '1234567',
-                'employee_email' => 'putrinadya@gmail.com',
-                'employee_status' => '1',
-                'employee_image' => '',
-                'created_by' => '1',
-                'update_by' => '1'
-            ]
-        ]);
-        $body = $response->getBody();
-        return $body_array = json_decode($body, true);
-        print("<pre>".print_r($body, true). "</pre>");
-    
-    }
 
     public function update(Request $request, $id)
     {

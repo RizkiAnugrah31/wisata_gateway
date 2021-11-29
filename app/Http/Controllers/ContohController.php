@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ContohController extends Controller
 {
     // Example GET
-    public function exampleGet()
+    public function index(Request $request)
     {
         $client = new Client();
         $options = [
@@ -17,17 +17,17 @@ class ContohController extends Controller
                 'Content-Type' => 'application/json',
             ],
         ];
-        $responseService = $client->request('GET', env('SERVICE_MASTER') . '/contoh', $options);
+        $responseService = $client->request('GET', env('SERVICE_MASTER') . '/Banner', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
         // uncomment di bawah bwt cek ambil data
-        // dd($response->data);
+         dd($response->data);
         // uncomment di bawah bwt cek ambil data dan yg pertama
         // dd($response->data[0]);
         return response()->json($response, $responseService->getStatusCode());
     }
 
     // Example POST
-    public function examplePost(Request $request)
+    public function store(Request $request)
     {
         $client = new Client();
         $options = [
@@ -37,7 +37,7 @@ class ContohController extends Controller
             ],
             'json' => $request->all()
         ];
-        $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/contoh', $options);
+        $responseService = $client->request('POST', env('SERVICE_MASTER') . '/contoh', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
         return response()->json($response, $responseService->getStatusCode());
     }
