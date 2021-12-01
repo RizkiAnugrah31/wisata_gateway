@@ -3,14 +3,14 @@ namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\EmployeeModel;
+use App\CredentialsModel;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Cms\Authcontroller;
+use App\Http\Controllers\Cms\TokenController;
 
 
-class AuthEmployeeController extends Controller
+class AuthTokenController extends Controller
 {
     public function login(Request $request)
     {    
@@ -23,8 +23,8 @@ class AuthEmployeeController extends Controller
             ],
             'json' => $request->all()
         ];
-        $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Employee/login', $options);
-        $response = json_decode($responseService->getBody()->getContents(), false);
+        $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Credentials/login', $options);
+        $response = json_decode($responseService->getBody()->getContents(), false );
 
         // dd($response->data);
         // dd($response->data->employee_id);
@@ -34,39 +34,33 @@ class AuthEmployeeController extends Controller
             $secret_key = JWT::encode([
                 'iss' => url(),
                 'iat' => time(),
-                'sub' => $response->data->employee_id,
+                'sub' => $response->data->credential_id,
                 'exp' => time() + 60 * 60 * 24 * 1
            ], env('JWT_SECRET'));
            
             return response()->json([
                 'data' => [
-                    'employee_id' => $response->data->employee_id,
-                    'employee_firstname' => $response->data->employee_firstname,
-                    'employee_middlename' => $response->data->employee_middlename,
-                    'employee_lastname' => $response->data->employee_lastname,
-                    'employee_username' => $response->data->employee_username,
-                    'employee_image' => $response->data->employee_image,
-                    'secret_key' => $secret_key,
+                    'credential_id' => $response->data->credential_id,
+                    'platfrom' => $response->data->platfrom,
+                    'secret_key' => $secret_key
                 ],
                 'message' => 'Valid',
                 'success' => true,
             
             ]);
-        } else {
+          } else {
             return response()->json([
                 'data' => new \stdClass(),
                 'message' => "Data Tidak Valid",
                 'success' => false
             ]);
         }
+}
 
         
 
        
 
         
-        // dd($request->getBody());
-        //  return $secret_key = json($secret_key, true);
-        //  print("<pre>".print_r($secret_key, true). "</pre>");
-    }
+        
 }

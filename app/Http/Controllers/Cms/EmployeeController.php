@@ -18,21 +18,16 @@ class EmployeeController extends Controller
                 'Content-Type' => ' application/json',
             ],
         ];
-        $responseService = $client->request('GET', env('SEFVICE_MEMBER') . '/Employee/login', $options);
-        $reponse = json_decode($responseService->getBody()->getContents(), false);
+        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Employee/fetch', $options);
+        $response = json_decode($responseService->getBody()->getContents(), false);
 
-        dd($response->data);
+        // dd($response->data);
 
         return response()->json($response,$responseService->getStatusCode());
-        
-
-        print("<pre>".print_r($data, true). "</pre>");
-        
-        
     }
 
     public function detail($id){
-        dd("test");
+        // dd("test");
         $client = new \GuzzleHttp\Client();;
         $request = $client->get('http://localhost:8002/Employee/detail/'.$id);
         $response = $request->getBody()->getContents();
@@ -45,22 +40,33 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         // dd('test');
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', 'http://localhost:8002/Employee/store', [
-            'json' => [
-                'user_roles_id' => '3',
-                'employee_firstname' => 'Putri',
-                'employee_middlename' => 'Nadya',
-                'employee_lastname' => 'En',
-                'employee_username' => 'Putrinadyaen',
-                'employee_password' => '1234567',
-                'employee_email' => 'putrinadya@gmail.com',
-                'employee_status' => '1',
-                'employee_image' => '',
-                'created_by' => '1',
-                'update_by' => '1'
-            ]
-        ]);
+        $client = new Client();
+        $options = [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => ' application/json',
+            ],
+            'json' => $request->all()
+        ];
+        $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Employee/store', $options);
+        $response = json_decode($responseService->getBody()->getContents(), false);
+       
+        if ($response->success) {
+                return response()->json([
+                    'data' => $response,
+                    'message' => 'Valid',
+                    'success' => true
+                ]);
+        }  else {
+                return response()->json([
+                    'data' => '',
+                    'message' => 'tidak Valid',
+                    'success' => false
+                ]);
+        }
+                
+            
+        
         $body = $response->getBody();
         return $body_array = json_decode($body, true);
         print("<pre>".print_r($body, true). "</pre>");

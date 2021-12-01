@@ -22,7 +22,7 @@ class ContohController extends Controller
         // uncomment di bawah bwt cek ambil data
         // dd($response->data);
         // uncomment di bawah bwt cek ambil data dan yg pertama
-        // dd($response->data[0]);
+        dd($response->data);
         return response()->json($response, $responseService->getStatusCode());
     }
 

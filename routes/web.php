@@ -17,11 +17,10 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-// example
-$router->get('/contoh', 'ContohController@exampleGet');
-$router->post('/contoh', 'ContohController@examplePost');
-$router->get('/contohGetParam', 'ContohController@exampleGetParam');
-// end example
+$router->post('/Employee/login','Cms\AuthEmployeeController@login');
+$router->post('/Credentials/login','Cms\AuthTokenController@login');
+
+$router->group(['middleware' => ['auth']], function ($router) {
 
 $router->get('/Employee/fetch','Cms\EmployeeController@index');
 $router->get('/Employee/detail/{id}','Cms\EmployeeController@detail');
@@ -29,13 +28,21 @@ $router->post('/Employee/store','Cms\EmployeeController@store');
 $router->put('/Employee/update/{id}','Cms\EmployeeController@update');
 $router->delete('/Employee/delete/{id}','Cms\EmployeeController@delete');
 
-$router->post('/Employee/login','Cms\AuthEmployeeController@login');
-
 $router->get('/Banner/fetch','Cms\BannerController@index');
 $router->get('/Banner/detail/{id}','Cms\BannerContoller@detail');
 $router->post('/Banner/store','Cms\BannerController@store');
 $router->put('/Banner/update/{id}','Cms\BannerController@update');
 $router->delete('/Banner/delete/{id}','Cms\BannerController@delete');
+});
+
+
+// example
+$router->get('/contoh', 'ContohController@exampleGet');
+$router->post('/contoh', 'ContohController@examplePost');
+$router->get('/contohGetParam', 'ContohController@exampleGetParam');
+// end example
+
+
 
 
 // $router->post('/login','Cms\AuthEmployeeController@login');
