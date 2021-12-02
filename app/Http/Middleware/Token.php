@@ -15,8 +15,9 @@ class Token
      */
     public function handle($request, Closure $next)
     {
+        $secret_key = $request->bearerToken();
         
-        if(empty($secret_key->getToken())) {
+        if(empty($secret_key)) {
            return response()->json([
                'data' => '',
                'message' => 'invalid',
@@ -24,7 +25,7 @@ class Token
            ]);
        }
        try{
-        $decode_token = JWT::decode($secret_key.'tokenJadiSalah',env('JWT_SECRET'), ['HS256']);
+        $decode_token = JWT::decode($secret_key,env('JWT_SECRET'), ['HS256']);
 
        } catch (\Exception $exception) {
            return response()->json([
@@ -33,7 +34,8 @@ class Token
                'success' => false
            ], 401);
        }
-       $request->getToken = $decode_token;
+
+       $request->secret_key = $decode_token;
        return $next($request);
     }
 }

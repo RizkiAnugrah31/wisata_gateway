@@ -36,6 +36,7 @@ $router->delete('/Banner/delete/{id}','Cms\BannerController@delete');
 });
 
 
+
 // example
 $router->get('/contoh', 'ContohController@exampleGet');
 $router->post('/contoh', 'ContohController@examplePost');

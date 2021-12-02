@@ -35,13 +35,14 @@ class AuthTokenController extends Controller
                 'iss' => url(),
                 'iat' => time(),
                 'sub' => $response->data->credential_id,
-                'exp' => time() + 60 * 60 * 24 * 1
+                'exp' => time() + 60 * 60 * 24 * 1,
+                'platform' => $response->data->platform
            ], env('JWT_SECRET'));
            
             return response()->json([
                 'data' => [
                     'credential_id' => $response->data->credential_id,
-                    'platfrom' => $response->data->platfrom,
+                    'platfrom' => $response->data->platform,
                     'secret_key' => $secret_key
                 ],
                 'message' => 'Valid',
