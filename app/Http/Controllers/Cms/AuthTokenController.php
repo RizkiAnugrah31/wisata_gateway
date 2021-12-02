@@ -60,7 +60,5 @@ class AuthTokenController extends Controller
         
 
        
-
+}        
         
-        
-}

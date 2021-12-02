@@ -41,7 +41,7 @@ class Authenticate
             return response()->json([
                 'data' => '',
                 'message' => 'invalid',
-                'seccess' => false
+                'success' => false
             ]);
         } 
  
