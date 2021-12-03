@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use Firebase\JWT\JWT;
 
 class Authenticate
 {
@@ -44,9 +45,10 @@ class Authenticate
                 'success' => false
             ]);
         } 
- 
+        
+        $secret_key = $request->bearerToken();
         try{
-            $decode_token = JWT::decode($secret_key.'tokenJadiSalah',env('JWT_SECRET'), ['HS256']);
+            $decode_token = JWT::decode($secret_key,env('JWT_SECRET'), ['HS256']);
 
            } catch (\Exception $exception) {
                return response()->json([

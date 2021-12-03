@@ -33,6 +33,24 @@ $router->get('/Banner/detail/{id}','Cms\BannerContoller@detail');
 $router->post('/Banner/store','Cms\BannerController@store');
 $router->put('/Banner/update/{id}','Cms\BannerController@update');
 $router->delete('/Banner/delete/{id}','Cms\BannerController@delete');
+
+$router->get('/Menus/fetch','Cms\MenusController@index');
+$router->get('/Menus/detail/{id}','Cms\MenusController@detail');
+$router->post('/Menus/store','Cms\MenusController@store');
+$router->put('/Menus/update/{id}','Cms\MenusController@update');
+$router->delete('/Menus/delete/{id}','Cms\MenusController@delete');
+
+$router->get('/MenuGroups/fetch','Cms\MenuGroupsController@index');
+$router->get('/MenuGroups/detail/{id}','Cms\MenuGroupsController@detail');
+$router->post('/MenuGroups/store','Cms\MenuGroupsController@store');
+$router->put('/MenuGroups/update/{id}','Cms\MenuGroupsController@update');
+$router->delete('/MenuGroups/delete/{id}','Cms\MenuGroupsController@delete');
+
+$router->get('/UserPrivileges/fetch','Cms\UserPrivilegesController@index');
+$router->get('/UserPrivileges/detail/{id}','Cms\UserPrivilegesController@detail');
+$router->post('/UserPrivileges/store','Cms\UserPrivilegesController@store');
+$router->put('/UserPrivileges/update/{id}','Cms\UserPrivilegesController@update');
+$router->delete('/UserPrivileges/delete/{id}','Cms\UserPrivilegesController@delete');
 });
 
 

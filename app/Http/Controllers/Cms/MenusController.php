@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Cms;
 
-use App\EmployeeModel;
+use App\MenusModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 
-class EmployeeController extends Controller
+class MenusController extends Controller
 {
     public function index(Request $request)
     {
@@ -18,7 +18,7 @@ class EmployeeController extends Controller
                 'Content-Type' => ' application/json',
             ],
         ];
-        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Employee/fetch', $options);
+        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Menus/fetch', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
 
         // dd($response->data);
@@ -29,13 +29,14 @@ class EmployeeController extends Controller
     public function detail($id){
         // dd("test");
         $client = new Client();
-        $options = [
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => ' application/json',
-            ],
-        ];
-        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Employee/detail', $options);
+
+        // $options = [
+        //     'headers' => [
+        //         'Accept' => 'application/json',
+        //         'Content-Type' => ' application/json',
+        //     ],
+        // ];
+        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Menus/detail', $id);
         $response = json_decode($responseService->getBody()->getContents(), false);
 
         // dd($response->data);
@@ -54,7 +55,7 @@ class EmployeeController extends Controller
             ],
             'json' => $request->all()
         ];
-        $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Employee/store', $options);
+        $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Menus/store', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
        
         if ($response->success) {
@@ -70,15 +71,11 @@ class EmployeeController extends Controller
                     'success' => false
                 ]);
         }
-                
-            
-        
-        
+    
     }
 
     public function update(Request $request, $id)
     {
-        
         $client = new Client();
         $options = [
             'headers' => [
@@ -87,7 +84,7 @@ class EmployeeController extends Controller
             ],
             'json' => $request->all()
         ];
-        $responseService = $client->request('PUT', env('SERVICE_MEMBER') . '/Employee/update', $options);
+        $responseService = $client->request('PUT', env('SERVICE_MEMBER') . '/Menus/update', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
        
         if ($response->success) {
@@ -103,6 +100,7 @@ class EmployeeController extends Controller
                     'success' => false
                 ]);
         }
+    
     }
 
     public function delete($id)
