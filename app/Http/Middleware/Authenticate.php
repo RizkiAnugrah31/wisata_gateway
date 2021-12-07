@@ -41,7 +41,7 @@ class Authenticate
         if(empty($request->bearerToken())) {
             return response()->json([
                 'data' => '',
-                'message' => 'invalid',
+                'message' => 'Token Tidak Valid',
                 'success' => false
             ]);
         } 

@@ -27,21 +27,30 @@ class MenusController extends Controller
     }
 
     public function detail($id){
-        // dd("test");
         $client = new Client();
-
-        // $options = [
-        //     'headers' => [
-        //         'Accept' => 'application/json',
-        //         'Content-Type' => ' application/json',
-        //     ],
-        // ];
-        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Menus/detail', $id);
+        $options = [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => ' application/json',
+            ],
+        ];
+        $responseService = $client->delete(env('SERVICE_MEMBER') . '/Menus/detail', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
-
-        // dd($response->data);
-
-        return response()->json($response,$responseService->getStatusCode());
+        $parameter = \request($id)->all();
+        
+        if ($response->success) {
+                return response()->json([
+                    'data' => $response,
+                    'message' => 'Valid',
+                    'success' => true
+                ]);
+        }  else {
+                return response()->json([
+                    'data' => '',
+                    'message' => 'tidak Valid',
+                    'success' => false
+                ]);
+        }
     }
 
     public function store(Request $request)
@@ -57,6 +66,7 @@ class MenusController extends Controller
         ];
         $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Menus/store', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
+        $parameter = \request($id)->all();
        
         if ($response->success) {
                 return response()->json([
@@ -105,12 +115,30 @@ class MenusController extends Controller
 
     public function delete($id)
     {
-       $client = new \GuzzleHttp\Client();;
-        $request = $client->delete('http://localhost:8002/Employee/delete'.$id);
-        $response = $request->getBody()->getContents();
+        $client = new Client();
+        $options = [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => ' application/json',
+            ],
+            'json' => $request->all()
+        ];
+        $responseService = $client->request('DELETE', env('SERVICE_MEMBER') . '/Menus/delete', $options);
+        $response = json_decode($responseService->getBody()->getContents(), false);
+        $parameter = \request($id)->all();
         
-        return $data = json_decode($response, true);
-
-        print("<pre>".print_r($data, true). "</pre>");
+        if ($response->success) {
+                return response()->json([
+                    'data' => $response,
+                    'message' => 'Valid',
+                    'success' => true
+                ]);
+        }  else {
+                return response()->json([
+                    'data' => '',
+                    'message' => 'tidak Valid',
+                    'success' => false
+                ]);
+        }
     }
 }
