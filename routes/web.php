@@ -56,9 +56,11 @@ $router->delete('/UserPrivileges/delete/{id}','Cms\UserPrivilegesController@dele
 
 
 // example
-$router->get('/contoh', 'ContohController@exampleGet');
-$router->post('/contoh', 'ContohController@examplePost');
-$router->get('/contohGetParam', 'ContohController@exampleGetParam');
+$router->get('/contoh', 'ContohController@fetch');
+$router->get('/contoh/{id}', 'ContohController@detail');
+$router->post('/contoh', 'ContohController@store');
+$router->put('/contoh/{id}', 'ContohController@update');
+$router->delete('/contoh/{id}', 'ContohController@destroy');
 // end example
 
 

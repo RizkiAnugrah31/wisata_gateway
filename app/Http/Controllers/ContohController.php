@@ -7,33 +7,41 @@ use Illuminate\Http\Request;
 
 class ContohController extends Controller
 {
-    // Example GET
-    public function exampleGet()
+    public function fetch()
     {
         $client = new Client();
         $options = [
             'headers' => [
                 'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
+                'Content-Type' => ' application/json',
             ],
         ];
         $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/contoh', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
-        // uncomment di bawah bwt cek ambil data
-        // dd($response->data);
-        // uncomment di bawah bwt cek ambil data dan yg pertama
-        dd($response->data);
         return response()->json($response, $responseService->getStatusCode());
     }
 
-    // Example POST
-    public function examplePost(Request $request)
+    public function detail($id)
     {
         $client = new Client();
         $options = [
             'headers' => [
                 'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
+                'Content-Type' => ' application/json',
+            ],
+        ];
+        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/contoh/' . $id, $options);
+        $response = json_decode($responseService->getBody()->getContents(), false);
+        return response()->json($response, $responseService->getStatusCode());
+    }
+
+    public function store(Request $request)
+    {
+        $client = new Client();
+        $options = [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => ' application/json',
             ],
             'json' => $request->all()
         ];
@@ -42,10 +50,32 @@ class ContohController extends Controller
         return response()->json($response, $responseService->getStatusCode());
     }
 
-    public function exampleGetParam()
+    public function update(Request $request, $id)
     {
-        // sama aja kek examplePost bedanya inisialisasinya
-        $parameter = \request()->all();
-        return $parameter;
+        $client = new Client();
+        $options = [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => ' application/json',
+            ],
+            'json' => $request->all()
+        ];
+        $responseService = $client->request('PUT', env('SERVICE_MEMBER') . '/contoh/' . $id, $options);
+        $response = json_decode($responseService->getBody()->getContents(), false);
+        return response()->json($response, $responseService->getStatusCode());
+    }
+
+    public function destroy($id)
+    {
+        $client = new Client();
+        $options = [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => ' application/json',
+            ],
+        ];
+        $responseService = $client->request('DELETE', env('SERVICE_MEMBER') . '/contoh/' . $id, $options);
+        $response = json_decode($responseService->getBody()->getContents(), false);
+        return response()->json($response, $responseService->getStatusCode());
     }
 }
