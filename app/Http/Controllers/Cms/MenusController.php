@@ -34,9 +34,8 @@ class MenusController extends Controller
                 'Content-Type' => ' application/json',
             ],
         ];
-        $responseService = $client->delete(env('SERVICE_MEMBER') . '/Menus/detail', $options);
+        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Menus/detail/{id}', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
-        $parameter = \request($id)->all();
         
         if ($response->success) {
                 return response()->json([
@@ -47,7 +46,7 @@ class MenusController extends Controller
         }  else {
                 return response()->json([
                     'data' => '',
-                    'message' => 'tidak Valid',
+                    'message' => 'Tidak Valid',
                     'success' => false
                 ]);
         }
@@ -66,7 +65,6 @@ class MenusController extends Controller
         ];
         $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Menus/store', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
-        $parameter = \request($id)->all();
        
         if ($response->success) {
                 return response()->json([
@@ -94,7 +92,7 @@ class MenusController extends Controller
             ],
             'json' => $request->all()
         ];
-        $responseService = $client->request('PUT', env('SERVICE_MEMBER') . '/Menus/update', $options);
+        $responseService = $client->request('PUT', env('SERVICE_MEMBER') . '/Menus/update/{id}', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
        
         if ($response->success) {
