@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use Firebase\JWT\JWT;
 
 class Authenticate
 {
@@ -35,10 +36,30 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
-        }
+        // dd($request->bearerToken());
 
-        return $next($request);
+        if(empty($request->bearerToken())) {
+            return response()->json([
+                'data' => '',
+                'message' => 'Token Tidak Valid',
+                'success' => false
+            ]);
+        } 
+        
+        $secret_key = $request->bearerToken();
+        try{
+            $decode_token = JWT::decode($secret_key,env('JWT_SECRET'), ['HS256']);
+
+           } catch (\Exception $exception) {
+               return response()->json([
+                   'data' => new \stdClass(),
+                   'message' =>$exception->getMessage(),
+                   'success' => false
+               ], 401);
+           }
+           $request->auth = $decode_token;
+           return $next($request);
+            
+        
     }
 }
