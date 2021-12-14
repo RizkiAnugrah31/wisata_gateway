@@ -37,6 +37,7 @@ class MenusController extends Controller
         $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Menus/detail/{id}', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
         
+        // dd($response->success);
         if ($response->success) {
                 return response()->json([
                     'data' => $response,

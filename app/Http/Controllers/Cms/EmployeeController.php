@@ -35,7 +35,7 @@ class EmployeeController extends Controller
                 'Content-Type' => ' application/json',
             ],
         ];
-        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Employee/detail/{id}', $options);
+        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Employee/detail/'. $id , $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
 
         // dd($response->data);
@@ -66,7 +66,7 @@ class EmployeeController extends Controller
             ],
             'json' => $request->all()
         ];
-        $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Employee/update/{id}', $options);
+        $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Employee/store', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
        
         if ($response->success) {
@@ -92,11 +92,7 @@ class EmployeeController extends Controller
                     'message' => 'tidak Valid',
                     'success' => false
                 ]);
-        }
-                
-            
-        
-        
+        }   
     }
 
     public function update(Request $request, $id)
