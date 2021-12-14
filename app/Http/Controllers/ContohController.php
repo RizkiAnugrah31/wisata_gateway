@@ -16,7 +16,7 @@ class ContohController extends Controller
                 'Content-Type' => ' application/json',
             ],
         ];
-        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/contoh', $options);
+        $responseService = $client->request('GET', env('SERVICE_MASTER') . '/Banner', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
         return response()->json($response, $responseService->getStatusCode());
     }
@@ -45,7 +45,7 @@ class ContohController extends Controller
             ],
             'json' => $request->all()
         ];
-        $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/contoh', $options);
+        $responseService = $client->request('POST', env('SERVICE_MASTER') . '/contoh', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
         return response()->json($response, $responseService->getStatusCode());
     }
