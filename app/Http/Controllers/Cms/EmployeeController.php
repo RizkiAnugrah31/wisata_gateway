@@ -69,6 +69,7 @@ class EmployeeController extends Controller
         $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Employee/store', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
        
+        dd($response->data->employee_firstname);
         if ($response->success) {
                 return response()->json([
                     'data' => [
@@ -78,6 +79,8 @@ class EmployeeController extends Controller
                         'employee_middlename' => $response->data->employee_middlename,
                         'employee_lastname' => $response->data->employee_lastname,
                         'employee_username' => $response->data->employee_username,
+                        'employee_email' => $response->data->employee_email,
+                        'employee_password' => $response->data->employee_password,
                         'employee_image' => $response->data->employee_image,
                         'employee_status' => $response->data->employee_status,
                         'created_by' => $response->data->created_by,
@@ -85,13 +88,13 @@ class EmployeeController extends Controller
                     ],
                     'message' => 'Valid',
                     'success' => true
-                ]);
+                ],200);
         }  else {
                 return response()->json([
-                    'data' => '',
+                    'data' => new \stdClass(),
                     'message' => 'tidak Valid',
                     'success' => false
-                ]);
+                ],401);
         }   
     }
 
@@ -117,7 +120,7 @@ class EmployeeController extends Controller
                 ]);
         }  else {
                 return response()->json([
-                    'data' => '',
+                    'data' => new \stdClass(),
                     'message' => 'tidak Valid',
                     'success' => false
                 ]);
