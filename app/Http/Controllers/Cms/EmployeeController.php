@@ -11,6 +11,7 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
+        dd(\request()->auth);
         $client = new Client();
         $options = [
             'headers' => [
@@ -57,19 +58,23 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
-        // dd('test');
+        // dd($request->auth->sub);
+        $inputData = $request->all();
+        $inputData['updated_by'] = $request->auth->sub;
+        $inputData['created_by'] = $request->auth->sub;
+
         $client = new Client();
         $options = [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => ' application/json',
             ],
-            'json' => $request->all()
+            'json' => $inputData
         ];
         $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Employee/store', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
        
-        dd($response->data->employee_firstname);
+        // dd($response->data);
         if ($response->success) {
                 return response()->json([
                     'data' => [
@@ -83,8 +88,8 @@ class EmployeeController extends Controller
                         'employee_password' => $response->data->employee_password,
                         'employee_image' => $response->data->employee_image,
                         'employee_status' => $response->data->employee_status,
-                        'created_by' => $response->data->created_by,
-                        'update_by' => $response->data->updated_by
+                        'created_by' => $request->auth->sub,
+                        'update_by' => $request->auth->sub
                     ],
                     'message' => 'Valid',
                     'success' => true
@@ -109,7 +114,7 @@ class EmployeeController extends Controller
             ],
             'json' => $request->all()
         ];
-        $responseService = $client->request('PUT', env('SERVICE_MEMBER') . '/Employee/update', $options);
+        $responseService = $client->request('PUT', env('SERVICE_MEMBER') . '/Employee/update'.$id , $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
        
         if ($response->success) {
