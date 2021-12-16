@@ -34,23 +34,11 @@ class MenusController extends Controller
                 'Content-Type' => ' application/json',
             ],
         ];
-        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Menus/detail/{id}', $options);
+        $responseService = $client->request('GET', env('SERVICE_MEMBER') . '/Menus/detail/'. $id , $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
         
         // dd($response->success);
-        if ($response->success) {
-                return response()->json([
-                    'data' => $response,
-                    'message' => 'Valid',
-                    'success' => true
-                ]);
-        }  else {
-                return response()->json([
-                    'data' => '',
-                    'message' => 'Tidak Valid',
-                    'success' => false
-                ]);
-        }
+        return response()->json($response, $responseService->getStatusCode());
     }
 
     public function store(Request $request)
@@ -66,20 +54,7 @@ class MenusController extends Controller
         ];
         $responseService = $client->request('POST', env('SERVICE_MEMBER') . '/Menus/store', $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
-       
-        if ($response->success) {
-                return response()->json([
-                    'data' => $response,
-                    'message' => 'Valid',
-                    'success' => true
-                ]);
-        }  else {
-                return response()->json([
-                    'data' => '',
-                    'message' => 'tidak Valid',
-                    'success' => false
-                ]);
-        }
+        return response()->json($response, $responseService->getStatusCode());
     
     }
 
@@ -93,22 +68,9 @@ class MenusController extends Controller
             ],
             'json' => $request->all()
         ];
-        $responseService = $client->request('PUT', env('SERVICE_MEMBER') . '/Menus/update/{id}', $options);
+        $responseService = $client->request('PUT', env('SERVICE_MEMBER') . '/Menus/update/'.$id , $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
-       
-        if ($response->success) {
-                return response()->json([
-                    'data' => $response,
-                    'message' => 'Valid',
-                    'success' => true
-                ]);
-        }  else {
-                return response()->json([
-                    'data' => '',
-                    'message' => 'tidak Valid',
-                    'success' => false
-                ]);
-        }
+        return response()->json($response, $responseService->getStatusCode());
     
     }
 
@@ -120,24 +82,9 @@ class MenusController extends Controller
                 'Accept' => 'application/json',
                 'Content-Type' => ' application/json',
             ],
-            'json' => $request->all()
         ];
-        $responseService = $client->request('DELETE', env('SERVICE_MEMBER') . '/Menus/delete', $options);
+        $responseService = $client->request('DELETE', env('SERVICE_MEMBER') . '/Menus/delete/'.$id, $options);
         $response = json_decode($responseService->getBody()->getContents(), false);
-        $parameter = \request($id)->all();
-        
-        if ($response->success) {
-                return response()->json([
-                    'data' => $response,
-                    'message' => 'Valid',
-                    'success' => true
-                ]);
-        }  else {
-                return response()->json([
-                    'data' => '',
-                    'message' => 'tidak Valid',
-                    'success' => false
-                ]);
-        }
+        return response()->json($response, $responseService->getStatusCode());
     }
 }
