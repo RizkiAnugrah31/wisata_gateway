@@ -51,6 +51,12 @@ $router->get('/UserPrivileges/detail/{id}','Cms\UserPrivilegesController@detail'
 $router->post('/UserPrivileges/store','Cms\UserPrivilegesController@store');
 $router->put('/UserPrivileges/update/{id}','Cms\UserPrivilegesController@update');
 $router->delete('/UserPrivileges/delete/{id}','Cms\UserPrivilegesController@delete');
+
+$router->get('/UserRoles/fetch','Cms\UserRolesController@index');
+$router->get('/UserRoles/detail/{id}','Cms\UserRolesController@detail');
+$router->post('/UserRoles/store','Cms\UserRolesController@store');
+$router->put('/UserRoles/update/{id}','Cms\UserRolesController@update');
+$router->delete('/UserRoles/delete/{id}','Cms\UserRolesController@delete');
 });
 
 
