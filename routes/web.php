@@ -20,7 +20,7 @@ $router->get('/', function () use ($router) {
 $router->post('/Employee/login','Cms\AuthEmployeeController@login');
 $router->post('/Credentials/login','Cms\AuthTokenController@login');
 
-$router->group(['middleware' => ['auth']], function ($router) {
+//$router->group(['middleware' => ['auth']], function ($router) {
 
 $router->get('/Employee/fetch','Cms\EmployeeController@index');
 $router->get('/Employee/detail/{id}','Cms\EmployeeController@detail');
@@ -57,9 +57,11 @@ $router->get('/UserRoles/detail/{id}','Cms\UserRolesController@detail');
 $router->post('/UserRoles/store','Cms\UserRolesController@store');
 $router->put('/UserRoles/update/{id}','Cms\UserRolesController@update');
 $router->delete('/UserRoles/delete/{id}','Cms\UserRolesController@delete');
+//});
+
+$router->group(['prefix' => 'Tour'], function () use ($router) {
+    $router->get('fetch', 'Cms\TourController@index');
 });
-
-
 
 // example
 $router->get('/contoh', 'ContohController@fetch');
